@@ -1,330 +1,506 @@
-<!doctype html>
-<html lang="ru">
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f4f5ef">
-  <meta name="description" content="Аренда туристического снаряжения в Алматы: палатки, спальники и рюкзаки для вашего маршрута.">
-  <title>Тропа — аренда туристического снаряжения</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourist Equipment Rental Platform | Outdoor Gear</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- External Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <input class="theme-toggle__input" type="checkbox" id="theme-toggle" aria-label="Включить лесную тему">
-  <div class="site-shell">
-    <header class="site-header">
-      <input class="menu-toggle__input" type="checkbox" id="menu-toggle" aria-label="Открыть меню">
-      <div class="header-inner">
-        <a class="brand" href="#top" aria-label="Тропа — на главную">
-          <span class="brand-mark" aria-hidden="true">↟</span>
-          <span class="brand-name">тропа<span class="brand-dot">.</span><small>снаряжение в аренду</small></span>
-        </a>
+<body class="bg-white text-gray-900 dark:bg-zinc-950 dark:text-gray-100 transition-colors duration-200 min-h-screen flex flex-col justify-between">
 
-        <nav class="main-nav" id="main-navigation" aria-label="Основная навигация">
-          <a href="#catalog">Снаряжение</a>
-          <a href="#how-it-works">Как это работает</a>
-          <a href="#routes">Маршруты</a>
-          <a href="#safety">Безопасность</a>
-          <a class="mobile-nav-cta" href="#rental">Рассчитать аренду <span aria-hidden="true">↗</span></a>
-        </nav>
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-50 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm border-b border-gray-100 dark:border-zinc-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand Logo -->
+                <a href="#" class="flex items-center gap-2 font-bold text-lg text-gray-900 dark:text-white tracking-tight">
+                    <i class="fa-solid fa-mountain text-brand-500 text-xl"></i>
+                    <span>GEO RENT</span>
+                </a>
 
-        <div class="header-actions">
-          <label class="theme-switch" for="theme-toggle" title="Переключить тему">
-            <span class="theme-switch__icon theme-switch__sun" aria-hidden="true">☼</span>
-            <span class="theme-switch__track"><span></span></span>
-            <span class="theme-switch__icon theme-switch__moon" aria-hidden="true">☾</span>
-            <span class="sr-only">Переключить светлую и лесную тему</span>
-          </label>
-          <a class="header-phone" href="tel:+77001234567">+7 700 123 45 67</a>
-          <a class="button button--small header-cta" href="#rental">Арендовать <span aria-hidden="true">↗</span></a>
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-gray-600 dark:text-gray-300">
+                    <a href="#tents" class="hover:text-gray-900 dark:hover:text-white transition">Tents</a>
+                    <a href="#backpacks" class="hover:text-gray-900 dark:hover:text-white transition">Backpacks</a>
+                    <a href="#calculator" class="hover:text-gray-900 dark:hover:text-white transition">Calculator</a>
+                    <a href="#terms" class="hover:text-gray-900 dark:hover:text-white transition">Terms</a>
+                    <a href="#booking" class="hover:text-gray-900 dark:hover:text-white transition">Booking</a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="hidden md:flex items-center gap-4">
+                    <button onclick="toggleTheme()" class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white" aria-label="Toggle Theme">
+                        <i class="fa-solid fa-moon dark:hidden"></i>
+                        <i class="fa-solid fa-sun hidden dark:block"></i>
+                    </button>
+                    <a href="#booking" class="px-4 py-2 rounded-lg bg-gray-900 hover:bg-black dark:bg-white dark:hover:bg-gray-100 dark:text-gray-900 text-white font-medium text-xs transition">Rent Now</a>
+                </div>
+
+                <!-- Mobile Burger Button -->
+                <div class="flex items-center gap-2 md:hidden">
+                    <button onclick="toggleTheme()" class="p-2 text-gray-500 dark:text-gray-400">
+                        <i class="fa-solid fa-moon dark:hidden"></i>
+                        <i class="fa-solid fa-sun hidden dark:block"></i>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="p-2 text-gray-600 dark:text-gray-300">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-        <label class="menu-toggle" for="menu-toggle" aria-label="Показать навигацию">
-          <span></span><span></span><span></span>
-        </label>
-      </div>
+
+        <!-- Mobile Drawer -->
+        <div id="mobileDrawer" class="fixed inset-0 bg-black/40 z-50 hidden">
+            <div id="drawerContent" class="fixed inset-y-0 right-0 w-64 bg-white dark:bg-zinc-900 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-200">
+                <div>
+                    <div class="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-zinc-800">
+                        <span class="font-semibold text-gray-900 dark:text-white">Navigation</span>
+                        <button onclick="toggleMobileMenu()" class="text-gray-400 hover:text-gray-600">
+                            <i class="fa-solid fa-xmark text-lg"></i>
+                        </button>
+                    </div>
+                    <nav class="mt-6 flex flex-col gap-4 text-sm font-medium text-gray-700 dark:text-gray-300">
+                        <a href="#tents" onclick="toggleMobileMenu()">Tents</a>
+                        <a href="#backpacks" onclick="toggleMobileMenu()">Backpacks</a>
+                        <a href="#calculator" onclick="toggleMobileMenu()">Calculator</a>
+                        <a href="#terms" onclick="toggleMobileMenu()">Terms</a>
+                        <a href="#booking" onclick="toggleMobileMenu()">Booking</a>
+                    </nav>
+                </div>
+                <a href="#booking" onclick="toggleMobileMenu()" class="w-full py-2.5 text-center bg-gray-900 text-white dark:bg-white dark:text-gray-900 font-medium rounded-lg text-xs">Choose Equipment</a>
+            </div>
+        </div>
     </header>
 
-    <main id="top">
-      <section class="hero section-wrap" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <p class="eyebrow"><span class="eyebrow-line"></span> Алматы · Казахстан</p>
-          <h1 id="hero-title">Ближе к природе.<br><em>Легче на подъём.</em></h1>
-          <p class="hero-lead">Всё для хорошего похода — без лишних покупок. Возьмите проверенное снаряжение на выходные или в большое путешествие.</p>
-          <div class="hero-actions">
-            <a class="button" href="#catalog">Выбрать снаряжение <span aria-hidden="true">↗</span></a>
-            <a class="text-link" href="#how-it-works">Как работает аренда <span aria-hidden="true">↓</span></a>
-          </div>
-          <div class="hero-note">
-            <span class="avatar-stack" aria-hidden="true"><i>А</i><i>М</i><i>К</i></span>
-            <span><strong>1 200+ путешественников</strong><small>уже отправились с нами</small></span>
-          </div>
-        </div>
-        <div class="hero-art">
-          <div class="hero-image-frame">
-            <img src="images/img/Group%201.svg" alt="Подборка туристического снаряжения на фоне природы" width="931" height="1001">
-          </div>
-          <div class="hero-stamp" aria-label="Проверяем каждую вещь">
-            <span class="stamp-spark" aria-hidden="true">✳</span>
-            <span>Проверено<br>перед каждым<br>походом</span>
-          </div>
-          <p class="hero-image-caption"><span>01 / 04</span> Выходные, которые запомнятся</p>
-        </div>
-        <a class="scroll-cue" href="#catalog"><span></span> Листайте вниз</a>
-      </section>
+    <main>
+        <!-- HERO SECTION -->
+        <section class="py-20 sm:py-28 max-w-4xl mx-auto px-4 text-center">
+            <span class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-3 block">Outdoor Equipment Rental</span>
+            <h1 class="text-4xl sm:text-6xl font-bold tracking-tight text-gray-900 dark:text-white mb-6">
+                Don't Buy Gear — <span class="underline decoration-1 underline-offset-8">Rent It!</span>
+            </h1>
+            <p class="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto mb-8 font-normal leading-relaxed">
+                High-quality tents, backpacks, and expedition gear for hiking and trekking. Simple rental process with minimal paperwork.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <a href="#inventory" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-gray-900 hover:bg-black dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 text-sm font-medium transition">
+                    Choose Equipment
+                </a>
+                <a href="#calculator" class="w-full sm:w-auto px-6 py-3 rounded-lg border border-gray-200 dark:border-zinc-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-900 text-sm font-medium transition">
+                    Calculate Price
+                </a>
+            </div>
+        </section>
 
-      <section class="trust-strip" aria-label="Наши преимущества">
-        <div class="trust-inner">
-          <p><span class="trust-icon" aria-hidden="true">✳</span> Чистое и проверенное снаряжение</p>
-          <p><span class="trust-icon" aria-hidden="true">↗</span> Забрать можно в Алматы</p>
-          <p><span class="trust-icon" aria-hidden="true">♡</span> Поможем собрать комплект</p>
-          <p><span class="trust-icon" aria-hidden="true">₸</span> Честная цена за день</p>
-        </div>
-      </section>
+        <!-- GRID CATALOG SECTION -->
+        <section id="inventory" class="py-16 border-t border-gray-100 dark:border-zinc-900 max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Rental Inventory</h2>
+                    <p class="text-xs text-gray-500">Select items for your upcoming trip</p>
+                </div>
+                <!-- Filter Buttons -->
+                <div class="flex gap-2 text-xs">
+                    <button onclick="filterCatalog('all')" class="filter-btn font-medium px-3 py-1.5 rounded bg-gray-900 text-white dark:bg-white dark:text-gray-900">All</button>
+                    <button onclick="filterCatalog('tent')" class="filter-btn font-medium px-3 py-1.5 rounded bg-gray-100 dark:bg-zinc-900 text-gray-600 dark:text-gray-400 hover:bg-gray-200">Tents</button>
+                    <button onclick="filterCatalog('backpack')" class="filter-btn font-medium px-3 py-1.5 rounded bg-gray-100 dark:bg-zinc-900 text-gray-600 dark:text-gray-400 hover:bg-gray-200">Backpacks</button>
+                    <button onclick="filterCatalog('gear')" class="filter-btn font-medium px-3 py-1.5 rounded bg-gray-100 dark:bg-zinc-900 text-gray-600 dark:text-gray-400 hover:bg-gray-200">Accessories</button>
+                </div>
+            </div>
 
-      <section class="catalog section-wrap" id="catalog" aria-labelledby="catalog-title">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow"><span class="eyebrow-line"></span> Соберите свой комплект</p>
-            <h2 id="catalog-title">Снаряжение для<br><em>больших планов</em></h2>
-          </div>
-          <p class="section-intro">Никаких компромиссов между комфортом и приключением. Каждую вещь мы лично проверяем после возврата.</p>
-        </div>
-        <div class="category-tabs" role="group" aria-label="Категории снаряжения">
-          <a class="category-tab category-tab--active" href="#catalog">Всё снаряжение <span>04</span></a>
-          <a class="category-tab" href="#tent">Палатки</a>
-          <a class="category-tab" href="#sleeping-bag">Спальники</a>
-          <a class="category-tab" href="#backpack">Рюкзаки</a>
-        </div>
-        <div class="product-grid">
-          <article class="product-card" id="tent">
-            <div class="product-visual product-visual--tent">
-              <span class="product-tag">Хит сезона</span>
-              <span class="product-art" aria-hidden="true">⛺</span>
-              <span class="visual-caption">на двоих · 3 сезона</span>
-            </div>
-            <div class="product-info">
-              <div class="product-heading"><h3>Палатка Trek 2</h3><span class="rating">★ 4.9</span></div>
-              <p class="product-description">Лёгкая, устойчивая к ветру, с тамбуром для рюкзаков.</p>
-              <div class="product-specs"><span>⌁ 2.8 кг</span><span>↔ 210 × 160 см</span></div>
-              <div class="product-bottom"><p><strong>4 500 ₸</strong><span> / сутки</span></p><button class="icon-button add-product" type="button" data-product="tent" aria-label="Добавить палатку Trek 2 в расчёт">+</button></div>
-            </div>
-          </article>
-          <article class="product-card" id="sleeping-bag">
-            <div class="product-visual product-visual--sleeping">
-              <span class="product-tag product-tag--light">Комфорт −5 °C</span>
-              <span class="product-art" aria-hidden="true">❋</span>
-              <span class="visual-caption">тёплый сон в горах</span>
-            </div>
-            <div class="product-info">
-              <div class="product-heading"><h3>Спальник Nord</h3><span class="rating">★ 4.8</span></div>
-              <p class="product-description">Мягкий кокон для прохладных ночей и ранних подъёмов.</p>
-              <div class="product-specs"><span>⌁ 1.4 кг</span><span>↔ до 190 см</span></div>
-              <div class="product-bottom"><p><strong>3 500 ₸</strong><span> / сутки</span></p><button class="icon-button add-product" type="button" data-product="sleeping" aria-label="Добавить спальник Nord в расчёт">+</button></div>
-            </div>
-          </article>
-          <article class="product-card" id="backpack">
-            <div class="product-visual product-visual--backpack">
-              <span class="product-tag product-tag--light">Лёгкий маршрут</span>
-              <span class="product-art" aria-hidden="true">♧</span>
-              <span class="visual-caption">ничего лишнего</span>
-            </div>
-            <div class="product-info">
-              <div class="product-heading"><h3>Рюкзак Altai 55</h3><span class="rating">★ 5.0</span></div>
-              <p class="product-description">Удобная посадка и продуманные карманы для долгого пути.</p>
-              <div class="product-specs"><span>⌁ 1.7 кг</span><span>↗ 55 литров</span></div>
-              <div class="product-bottom"><p><strong>2 500 ₸</strong><span> / сутки</span></p><button class="icon-button add-product" type="button" data-product="backpack" aria-label="Добавить рюкзак Altai 55 в расчёт">+</button></div>
-            </div>
-          </article>
-          <article class="product-card" id="mat">
-            <div class="product-visual product-visual--mat">
-              <span class="product-tag">Комфорт в комплекте</span>
-              <span class="product-art" aria-hidden="true">▤</span>
-              <span class="visual-caption">спите крепко</span>
-            </div>
-            <div class="product-info">
-              <div class="product-heading"><h3>Коврик Forest</h3><span class="rating">★ 4.7</span></div>
-              <p class="product-description">Самонадувающийся коврик — мягко даже на каменистой земле.</p>
-              <div class="product-specs"><span>⌁ 900 г</span><span>↔ 183 × 51 см</span></div>
-              <div class="product-bottom"><p><strong>1 500 ₸</strong><span> / сутки</span></p><button class="icon-button add-product" type="button" data-product="mat" aria-label="Добавить коврик Forest в расчёт">+</button></div>
-            </div>
-          </article>
-        </div>
-        <p class="catalog-footnote"><span aria-hidden="true">✳</span> Не знаете, что взять? <a href="#rental">Подскажем под ваш маршрут</a></p>
-      </section>
+            <!-- Responsive Catalog Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="catalogGrid">
+                
+                <!-- Card 1 -->
+                <article class="catalog-item tent border border-gray-200 dark:border-zinc-800 rounded-xl p-5 flex flex-col justify-between bg-white dark:bg-zinc-900/50">
+                    <div>
+                        <div class="w-full h-40 mb-4 rounded-lg overflow-hidden bg-gray-100 dark:bg-zinc-800">
+                            <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=600&q=80" alt="TNF Stormbreak 2" class="w-full h-full object-cover" loading="lazy">
+                        </div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-400">Tent • 2-Person</span>
+                            <span class="text-sm font-bold text-gray-900 dark:text-white">$10 <span class="text-xs font-normal text-gray-400">/ day</span></span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">TNF Stormbreak 2</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Stormproof two-door tent designed for mountain conditions.</p>
+                        
+                        <div class="text-xs space-y-1 text-gray-600 dark:text-gray-400 border-t border-gray-100 dark:border-zinc-800 pt-3 mb-4">
+                            <div class="flex justify-between"><span>Weight:</span> <strong>2.67 kg</strong></div>
+                            <div class="flex justify-between"><span>Dimensions:</span> <strong>221 x 127 cm</strong></div>
+                            <div class="flex justify-between"><span>Waterproof:</span> <strong>3000 mm</strong></div>
+                        </div>
+                    </div>
+                    <button onclick="selectGear('TNF Stormbreak 2', 10)" class="w-full py-2 bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-900 dark:text-white rounded-lg text-xs font-medium transition">Select</button>
+                </article>
 
-      <section class="how-it-works" id="how-it-works" aria-labelledby="steps-title">
-        <div class="section-wrap how-inner">
-          <div class="how-intro">
-            <p class="eyebrow"><span class="eyebrow-line"></span> Ничего сложного</p>
-            <h2 id="steps-title">От идеи до<br><em>тропы — 3 шага</em></h2>
-            <p>Вы отдыхаете от города, а мы заботимся о том, чтобы всё нужное было под рукой.</p>
-            <a class="text-link" href="#rental">Начать планировать <span aria-hidden="true">↗</span></a>
-          </div>
-          <ol class="steps-list">
-            <li><span class="step-number">01</span><div><h3>Выберите снаряжение</h3><p>Соберите свой набор или расскажите нам о маршруте — поможем с выбором.</p></div><span class="step-arrow" aria-hidden="true">↗</span></li>
-            <li><span class="step-number">02</span><div><h3>Забронируйте даты</h3><p>Оставьте заявку онлайн. Мы подтвердим наличие и договоримся о встрече.</p></div><span class="step-arrow" aria-hidden="true">↗</span></li>
-            <li><span class="step-number">03</span><div><h3>Заберите и отправляйтесь</h3><p>Заберите чистое снаряжение в Алматы и отправляйтесь навстречу природе.</p></div><span class="step-arrow" aria-hidden="true">↗</span></li>
-          </ol>
-        </div>
-      </section>
+                <!-- Card 2 -->
+                <article class="catalog-item tent border border-gray-200 dark:border-zinc-800 rounded-xl p-5 flex flex-col justify-between bg-white dark:bg-zinc-900/50">
+                    <div>
+                        <div class="w-full h-40 mb-4 rounded-lg overflow-hidden bg-gray-100 dark:bg-zinc-800">
+                            <img src="https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=600&q=80" alt="MSR Hubba Hubba 3P" class="w-full h-full object-cover" loading="lazy">
+                        </div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-400">Tent • 3-Person</span>
+                            <span class="text-sm font-bold text-gray-900 dark:text-white">$15 <span class="text-xs font-normal text-gray-400">/ day</span></span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">MSR Hubba Hubba 3P</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Ultralight three-season backpacking tent.</p>
+                        
+                        <div class="text-xs space-y-1 text-gray-600 dark:text-gray-400 border-t border-gray-100 dark:border-zinc-800 pt-3 mb-4">
+                            <div class="flex justify-between"><span>Weight:</span> <strong>2.07 kg</strong></div>
+                            <div class="flex justify-between"><span>Dimensions:</span> <strong>213 x 172 cm</strong></div>
+                            <div class="flex justify-between"><span>Waterproof:</span> <strong>1200 mm</strong></div>
+                        </div>
+                    </div>
+                    <button onclick="selectGear('MSR Hubba Hubba 3P', 15)" class="w-full py-2 bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-900 dark:text-white rounded-lg text-xs font-medium transition">Select</button>
+                </article>
 
-      <section class="rental section-wrap" id="rental" aria-labelledby="rental-title">
-        <div class="rental-copy">
-          <p class="eyebrow"><span class="eyebrow-line"></span> Ваш поход начинается здесь</p>
-          <h2 id="rental-title">Рассчитайте<br><em>своё путешествие</em></h2>
-          <p>Укажите даты и снаряжение — стоимость появится сразу. Ничего не списываем: это только заявка.</p>
-          <div class="rental-assurance"><span aria-hidden="true">↗</span><p><strong>Без предоплаты</strong><br>Сначала подтвердим наличие и ответим на вопросы.</p></div>
-        </div>
-        <form class="rental-form" id="rental-form">
-          <div class="form-heading"><h3>Заявка на аренду</h3><span>01 — 04</span></div>
-          <div class="form-field">
-            <label for="equipment">Что возьмём с собой?</label>
-            <select id="equipment" name="equipment" required>
-              <option value="tent" data-rate="4500">Палатка Trek 2 — 4 500 ₸ / сутки</option>
-              <option value="sleeping" data-rate="3500">Спальник Nord — 3 500 ₸ / сутки</option>
-              <option value="backpack" data-rate="2500">Рюкзак Altai 55 — 2 500 ₸ / сутки</option>
-              <option value="mat" data-rate="1500">Коврик Forest — 1 500 ₸ / сутки</option>
-            </select>
-          </div>
-          <div class="form-row">
-            <div class="form-field"><label for="start-date">Начало аренды</label><input id="start-date" name="start-date" type="date" required></div>
-            <div class="form-field"><label for="end-date">Возврат</label><input id="end-date" name="end-date" type="date" required></div>
-          </div>
-          <div class="form-row form-row--bottom">
-            <div class="form-field"><label for="quantity">Количество</label><div class="quantity-control"><button type="button" class="quantity-button" id="quantity-minus" aria-label="Уменьшить количество">−</button><input id="quantity" name="quantity" type="number" min="1" max="10" value="1" required><button type="button" class="quantity-button" id="quantity-plus" aria-label="Увеличить количество">+</button></div></div>
-            <div class="total-box" aria-live="polite" aria-atomic="true"><span id="duration-label">Выберите даты</span><strong id="total-price">— ₸</strong></div>
-          </div>
-          <p class="date-error" id="date-error" role="alert"></p>
-          <div class="form-field"><label for="phone">Ваш телефон</label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" pattern="[+0-9 \x28\x29\x2D]{10,20}" required></div>
-          <button class="button button--submit" type="submit">Оставить заявку <span aria-hidden="true">↗</span></button>
-          <p class="form-privacy">Нажимая кнопку, вы соглашаетесь на связь по указанному номеру.</p>
-          <p class="form-feedback" id="form-feedback" role="status" aria-live="polite"></p>
-        </form>
-      </section>
+                <!-- Card 3 -->
+                <article class="catalog-item backpack border border-gray-200 dark:border-zinc-800 rounded-xl p-5 flex flex-col justify-between bg-white dark:bg-zinc-900/50">
+                    <div>
+                        <div class="w-full h-40 mb-4 rounded-lg overflow-hidden bg-gray-100 dark:bg-zinc-800">
+                            <img src="https://images.unsplash.com/photo-1622260614153-03223fb72052?auto=format&fit=crop&w=600&q=80" alt="Osprey Atmos AG 65" class="w-full h-full object-cover" loading="lazy">
+                        </div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-400">Backpack • 65L</span>
+                            <span class="text-sm font-bold text-gray-900 dark:text-white">$8 <span class="text-xs font-normal text-gray-400">/ day</span></span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Osprey Atmos AG 65</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Features AntiGravity ventilation system for heavy loads.</p>
+                        
+                        <div class="text-xs space-y-1 text-gray-600 dark:text-gray-400 border-t border-gray-100 dark:border-zinc-800 pt-3 mb-4">
+                            <div class="flex justify-between"><span>Weight:</span> <strong>2.18 kg</strong></div>
+                            <div class="flex justify-between"><span>Capacity:</span> <strong>65 Liters</strong></div>
+                            <div class="flex justify-between"><span>Raincover:</span> <strong>Included</strong></div>
+                        </div>
+                    </div>
+                    <button onclick="selectGear('Osprey Atmos AG 65', 8)" class="w-full py-2 bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-900 dark:text-white rounded-lg text-xs font-medium transition">Select</button>
+                </article>
 
-      <section class="route-band" id="routes" aria-labelledby="routes-title">
-        <div class="route-content">
-          <p class="eyebrow"><span class="eyebrow-line"></span> Вдохновение рядом</p>
-          <h2 id="routes-title">Алматы — это<br><em>начало маршрута</em></h2>
-          <p>Большое Алматинское озеро, ущелья и горные перевалы ждут вас всего в паре часов от города.</p>
-          <a class="button button--light" href="https://visitalmaty.kz/" target="_blank" rel="noopener noreferrer">Идеи для маршрута <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="route-art" aria-hidden="true"><span class="route-sun"></span><span class="mountain mountain--back"></span><span class="mountain mountain--front"></span><span class="route-tent">⌂</span></div>
-        <p class="route-coordinate" aria-hidden="true">43° 13′ 0″ N &nbsp; 76° 51′ 0″ E</p>
-      </section>
+                <!-- Card 4 -->
+                <article class="catalog-item backpack border border-gray-200 dark:border-zinc-800 rounded-xl p-5 flex flex-col justify-between bg-white dark:bg-zinc-900/50">
+                    <div>
+                        <div class="w-full h-40 mb-4 rounded-lg overflow-hidden bg-gray-100 dark:bg-zinc-800">
+                            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=600&q=80" alt="Deuter Aircontact 75+10" class="w-full h-full object-cover" loading="lazy">
+                        </div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-400">Backpack • 75L</span>
+                            <span class="text-sm font-bold text-gray-900 dark:text-white">$9 <span class="text-xs font-normal text-gray-400">/ day</span></span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Deuter Aircontact 75+10</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Durable expedition pack built for tough conditions.</p>
+                        
+                        <div class="text-xs space-y-1 text-gray-600 dark:text-gray-400 border-t border-gray-100 dark:border-zinc-800 pt-3 mb-4">
+                            <div class="flex justify-between"><span>Weight:</span> <strong>3.10 kg</strong></div>
+                            <div class="flex justify-between"><span>Capacity:</span> <strong>75+10 Liters</strong></div>
+                            <div class="flex justify-between"><span>Frame:</span> <strong>V-Frame Alu</strong></div>
+                        </div>
+                    </div>
+                    <button onclick="selectGear('Deuter Aircontact 75+10', 9)" class="w-full py-2 bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-900 dark:text-white rounded-lg text-xs font-medium transition">Select</button>
+                </article>
 
-      <section class="safety section-wrap" id="safety" aria-labelledby="safety-title">
-        <div class="safety-icon" aria-hidden="true">✳</div>
-        <div><p class="eyebrow"><span class="eyebrow-line"></span> Берегите себя и природу</p><h2 id="safety-title">Хороший маршрут —<br><em>безопасный маршрут</em></h2><p class="safety-copy">Проверьте прогноз, сообщите близким о планах и забирайте с собой всё, что принесли. Горы прекрасны, когда мы относимся к ним с уважением.</p></div>
-        <a class="text-link safety-link" href="https://www.gov.kz/memleket/entities/emer-almaty?lang=ru" target="_blank" rel="noopener noreferrer">Советы по безопасности <span aria-hidden="true">↗</span></a>
-      </section>
+                <!-- Card 5 -->
+                <article class="catalog-item gear border border-gray-200 dark:border-zinc-800 rounded-xl p-5 flex flex-col justify-between bg-white dark:bg-zinc-900/50">
+                    <div>
+                        <div class="w-full h-40 mb-4 rounded-lg overflow-hidden bg-gray-100 dark:bg-zinc-800">
+                            <img src="https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=600&q=80" alt="Marmot Never Summer" class="w-full h-full object-cover" loading="lazy">
+                        </div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-400">Sleeping Bag</span>
+                            <span class="text-sm font-bold text-gray-900 dark:text-white">$7 <span class="text-xs font-normal text-gray-400">/ day</span></span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Marmot Never Summer</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Down sleeping bag rated for sub-zero temperatures (-18°C).</p>
+                        
+                        <div class="text-xs space-y-1 text-gray-600 dark:text-gray-400 border-t border-gray-100 dark:border-zinc-800 pt-3 mb-4">
+                            <div class="flex justify-between"><span>Weight:</span> <strong>1.45 kg</strong></div>
+                            <div class="flex justify-between"><span>Fill:</span> <strong>650FP Down</strong></div>
+                            <div class="flex justify-between"><span>Rating:</span> <strong>-18°C</strong></div>
+                        </div>
+                    </div>
+                    <button onclick="selectGear('Marmot Never Summer', 7)" class="w-full py-2 bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-900 dark:text-white rounded-lg text-xs font-medium transition">Select</button>
+                </article>
+
+                <!-- Card 6 -->
+                <article class="catalog-item gear border border-gray-200 dark:border-zinc-800 rounded-xl p-5 flex flex-col justify-between bg-white dark:bg-zinc-900/50">
+                    <div>
+                        <div class="w-full h-40 mb-4 rounded-lg overflow-hidden bg-gray-100 dark:bg-zinc-800">
+                            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80" alt="Trekking Poles" class="w-full h-full object-cover" loading="lazy">
+                        </div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-400">Accessory</span>
+                            <span class="text-sm font-bold text-gray-900 dark:text-white">$4 <span class="text-xs font-normal text-gray-400">/ day</span></span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Trekking Poles</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Carbon fiber shock-absorbing trekking poles.</p>
+                        
+                        <div class="text-xs space-y-1 text-gray-600 dark:text-gray-400 border-t border-gray-100 dark:border-zinc-800 pt-3 mb-4">
+                            <div class="flex justify-between"><span>Weight:</span> <strong>590 g</strong></div>
+                            <div class="flex justify-between"><span>Length:</span> <strong>68 - 140 cm</strong></div>
+                            <div class="flex justify-between"><span>Material:</span> <strong>Carbon</strong></div>
+                        </div>
+                    </div>
+                    <button onclick="selectGear('Trekking Poles', 4)" class="w-full py-2 bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-900 dark:text-white rounded-lg text-xs font-medium transition">Select</button>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- CALCULATOR SECTION -->
+        <section id="calculator" class="py-16 border-t border-gray-100 dark:border-zinc-900 max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Rental Calculator</h2>
+                <p class="text-xs text-gray-500 mt-1">Calculate your total cost based on gear selection and duration</p>
+            </div>
+
+            <div class="border border-gray-200 dark:border-zinc-800 rounded-xl p-6 bg-white dark:bg-zinc-900/30">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Equipment</label>
+                        <select id="calcItem" onchange="calculateRentalCost()" class="w-full bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg px-3 py-2 text-xs text-gray-900 dark:text-white focus:outline-none">
+                            <option value="10">TNF Stormbreak 2 ($10/day)</option>
+                            <option value="15">MSR Hubba Hubba 3P ($15/day)</option>
+                            <option value="8">Osprey Atmos 65 ($8/day)</option>
+                            <option value="9">Deuter Aircontact 75 ($9/day)</option>
+                            <option value="7">Marmot Sleeping Bag ($7/day)</option>
+                            <option value="4">Trekking Poles ($4/day)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Start Date</label>
+                        <input type="date" id="calcStartDate" onchange="calculateRentalCost()" class="w-full bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg px-3 py-2 text-xs text-gray-900 dark:text-white focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">End Date</label>
+                        <input type="date" id="calcEndDate" onchange="calculateRentalCost()" class="w-full bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg px-3 py-2 text-xs text-gray-900 dark:text-white focus:outline-none">
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-between border-t border-gray-100 dark:border-zinc-800 pt-4 gap-4">
+                    <div class="text-xs text-gray-600 dark:text-gray-400">
+                        Duration: <strong id="calcDays" class="text-gray-900 dark:text-white">1 day</strong> | 
+                        Discount (5+ days): <strong id="calcDiscount" class="text-gray-900 dark:text-white">$0</strong>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="text-right">
+                            <span class="text-[10px] text-gray-400 uppercase block">Total Price</span>
+                            <span id="calcTotal" class="text-2xl font-bold text-gray-900 dark:text-white">$10</span>
+                        </div>
+                        <a href="#booking" onclick="syncCalcToBooking()" class="px-4 py-2 bg-gray-900 hover:bg-black dark:bg-white dark:text-gray-900 text-white text-xs font-medium rounded-lg">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOOKING FEEDBACK FORM SECTION -->
+        <section id="booking" class="py-16 border-t border-gray-100 dark:border-zinc-900 max-w-xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Booking Form</h2>
+                <p class="text-xs text-gray-500 mt-1">Complete details to request equipment</p>
+            </div>
+
+            <form id="rentalForm" onsubmit="handleBookingSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Selected Item *</label>
+                    <input type="text" id="formEquipment" required readonly class="w-full px-3 py-2 bg-gray-100 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg text-xs text-gray-700 dark:text-gray-300 font-medium">
+                </div>
+
+                <div>
+                    <label for="fullName" class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Full Name *</label>
+                    <input type="text" id="fullName" name="fullName" required minlength="3" placeholder="Abdukadyr Adiya" class="w-full px-3 py-2 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg text-xs text-gray-900 dark:text-white focus:outline-none">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="phone" class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required pattern="[\+]\d{1,3}[\s-]?\d{3}[\s-]?\d{3}[\s-]?\d{4}" placeholder="+7 707 123 4567" class="w-full px-3 py-2 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg text-xs text-gray-900 dark:text-white focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Email *</label>
+                        <input type="email" id="email" name="email" required placeholder="student@iitu.edu.kz" class="w-full px-3 py-2 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg text-xs text-gray-900 dark:text-white focus:outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="startDate" class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Issue Date *</label>
+                        <input type="date" id="startDate" name="startDate" required class="w-full px-3 py-2 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg text-xs text-gray-900 dark:text-white focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="endDate" class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Return Date *</label>
+                        <input type="date" id="endDate" name="endDate" required class="w-full px-3 py-2 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg text-xs text-gray-900 dark:text-white focus:outline-none">
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 pt-2">
+                    <input type="checkbox" id="termsCheck" required class="rounded border-gray-300 text-gray-900 focus:ring-0">
+                    <label for="termsCheck" class="text-xs text-gray-500">I accept safety rules & rental terms.</label>
+                </div>
+
+                <button type="submit" class="w-full py-2.5 bg-gray-900 hover:bg-black dark:bg-white dark:hover:bg-gray-100 dark:text-gray-900 text-white font-medium rounded-lg text-xs transition">
+                    Submit Request
+                </button>
+            </form>
+        </section>
     </main>
 
-    <footer class="site-footer">
-      <div class="footer-main section-wrap">
-        <div class="footer-brand">
-          <a class="brand brand--footer" href="#top"><span class="brand-mark" aria-hidden="true">↟</span><span class="brand-name">тропа<span class="brand-dot">.</span><small>снаряжение в аренду</small></span></a>
-          <p>Меньше вещей.<br>Больше историй.</p>
-          <a class="footer-email" href="mailto:hello@tropa.kz">hello@tropa.kz <span aria-hidden="true">↗</span></a>
+    <!-- FOOTER -->
+    <footer id="terms" class="py-12 border-t border-gray-100 dark:border-zinc-900 text-xs text-gray-500">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <span class="font-bold text-gray-900 dark:text-white block mb-2">GEO RENT</span>
+                    <p class="leading-relaxed">Tourist equipment rental platform for hiking and mountain expeditions.</p>
+                </div>
+                <div>
+                    <span class="font-semibold text-gray-900 dark:text-white block mb-2">Navigation</span>
+                    <ul class="space-y-1">
+                        <li><a href="#tents" class="hover:text-gray-900 dark:hover:text-white">Tents</a></li>
+                        <li><a href="#backpacks" class="hover:text-gray-900 dark:hover:text-white">Backpacks</a></li>
+                        <li><a href="#calculator" class="hover:text-gray-900 dark:hover:text-white">Calculator</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="font-semibold text-gray-900 dark:text-white block mb-2">Safety</span>
+                    <ul class="space-y-1">
+                        <li><button onclick="openEmercomModal()" class="hover:text-gray-900 dark:hover:text-white text-left">EMERCOM Rules</button></li>
+                        <li><a href="https://wikiloc.com" target="_blank" rel="noopener" class="hover:text-gray-900 dark:hover:text-white">GPS Map Tracks</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="font-semibold text-gray-900 dark:text-white block mb-2">Theme Mode</span>
+                    <button onclick="toggleTheme()" class="py-1.5 px-3 border border-gray-200 dark:border-zinc-800 rounded text-xs text-gray-700 dark:text-gray-300 w-full text-left">
+                        Switch Mode (<span id="themeLabel">Light</span>)
+                    </button>
+                    <span class="block mt-4 text-[11px]">Student: Abdukadyr Adiya</span>
+                </div>
+            </div>
+            <div class="pt-6 border-t border-gray-100 dark:border-zinc-900 flex justify-between">
+                <p>© 2026 Tourist Equipment Rental Platform.</p>
+                <p>IITU ICT6001 Coursework</p>
+            </div>
         </div>
-        <div class="footer-column"><h3>Снаряжение</h3><a href="#tent">Палатки</a><a href="#sleeping-bag">Спальники</a><a href="#backpack">Рюкзаки</a><a href="#mat">Аксессуары</a></div>
-        <div class="footer-column"><h3>Планируйте</h3><a href="#how-it-works">Как работает аренда</a><a href="#routes">Маршруты рядом</a><a href="#rental">Рассчитать стоимость</a></div>
-        <div class="footer-column"><h3>Важно знать</h3><a href="#safety">Советы по безопасности</a><a href="#safety">Правила возврата</a><a href="https://www.gov.kz/memleket/entities/emer-almaty?lang=ru" target="_blank" rel="noopener noreferrer">Службы спасения ↗</a></div>
-        <div class="footer-contact"><span>Мы на связи</span><a href="tel:+77001234567">+7 700 123 45 67</a><small>Ежедневно, 09:00–20:00</small><div class="social-links"><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">ig</a><a href="https://t.me/" target="_blank" rel="noopener noreferrer" aria-label="Telegram">tg</a></div></div>
-      </div>
-      <div class="footer-bottom section-wrap"><span>© 2026 Тропа. В путь — налегке.</span><span>Сделано с заботой о природе <b aria-hidden="true">↟</b></span><a href="vscode://file/Users/adiyaad/Desktop/tourist-rental/index.html">Открыть в VS Code ↗</a><a href="#top">Наверх ↑</a></div>
     </footer>
-  </div>
-  <script>
-    (() => {
-      const form = document.querySelector('#rental-form');
-      const equipment = document.querySelector('#equipment');
-      const startDate = document.querySelector('#start-date');
-      const endDate = document.querySelector('#end-date');
-      const quantity = document.querySelector('#quantity');
-      const durationLabel = document.querySelector('#duration-label');
-      const totalPrice = document.querySelector('#total-price');
-      const dateError = document.querySelector('#date-error');
-      const feedback = document.querySelector('#form-feedback');
-      const menuToggle = document.querySelector('#menu-toggle');
 
-      const today = new Date();
-      today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
-      const todayString = today.toISOString().slice(0, 10);
-      startDate.min = todayString;
-      endDate.min = todayString;
+    <!-- EMERCOM MODAL -->
+    <div id="emercomModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-zinc-900 rounded-xl max-w-md w-full p-6 border border-gray-200 dark:border-zinc-800 shadow-xl">
+            <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2">EMERCOM Safety Rules</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                1. Register your group before mountain trips.<br>
+                2. Check weather forecasts & avalanche risks.<br>
+                3. Carry a first-aid kit and GPS powerbank.<br>
+                4. Verify tent and gear conditions prior to usage.
+            </p>
+            <button onclick="closeEmercomModal()" class="w-full py-2 bg-gray-900 text-white dark:bg-white dark:text-gray-900 text-xs font-medium rounded-lg">Close</button>
+        </div>
+    </div>
 
-      function calculate() {
-        dateError.textContent = '';
-        if (!startDate.value || !endDate.value) {
-          durationLabel.textContent = 'Выберите даты';
-          totalPrice.textContent = '— ₸';
-          return false;
-        }
-        const start = new Date(`${startDate.value}T00:00:00`);
-        const end = new Date(`${endDate.value}T00:00:00`);
-        const days = Math.round((end - start) / 86400000);
-        if (startDate.value < todayString) {
-          dateError.textContent = 'Дата начала не может быть в прошлом.';
-          durationLabel.textContent = 'Проверьте даты';
-          totalPrice.textContent = '— ₸';
-          return false;
-        }
-        if (days < 1) {
-          dateError.textContent = 'Дата возврата должна быть позже даты начала.';
-          durationLabel.textContent = 'Проверьте даты';
-          totalPrice.textContent = '— ₸';
-          return false;
-        }
-        const safeQuantity = Math.min(10, Math.max(1, Number(quantity.value) || 1));
-        quantity.value = safeQuantity;
-        const rate = Number(equipment.selectedOptions[0].dataset.rate);
-        durationLabel.textContent = `${days} ${days === 1 ? 'сутки' : days < 5 ? 'суток' : 'суток'} · ${safeQuantity} шт.`;
-        totalPrice.textContent = new Intl.NumberFormat('ru-RU').format(days * rate * safeQuantity) + ' ₸';
-        endDate.min = startDate.value;
-        return true;
-      }
+    <!-- TOAST -->
+    <div id="toast" class="fixed bottom-4 right-4 z-50 hidden">
+        <div class="bg-gray-900 text-white dark:bg-white dark:text-gray-900 px-4 py-3 rounded-lg shadow-lg text-xs">
+            Booking request submitted successfully!
+        </div>
+    </div>
 
-      [equipment, startDate, endDate, quantity].forEach((field) => {
-        field.addEventListener('input', calculate);
-        field.addEventListener('change', calculate);
-      });
-      document.querySelector('#quantity-minus').addEventListener('click', () => {
-        quantity.value = Math.max(1, (Number(quantity.value) || 1) - 1);
-        calculate();
-      });
-      document.querySelector('#quantity-plus').addEventListener('click', () => {
-        quantity.value = Math.min(10, (Number(quantity.value) || 1) + 1);
-        calculate();
-      });
-      document.querySelectorAll('.add-product').forEach((button) => {
-        button.addEventListener('click', () => {
-          equipment.value = button.dataset.product;
-          calculate();
-          document.querySelector('#rental').scrollIntoView({ behavior: 'smooth' });
-          equipment.focus({ preventScroll: true });
-        });
-      });
-      startDate.addEventListener('change', () => {
-        if (endDate.value && endDate.value < startDate.value) endDate.value = '';
-        endDate.min = startDate.value || todayString;
-        calculate();
-      });
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        feedback.textContent = '';
-        if (!form.reportValidity() || !calculate()) return;
-        const item = equipment.selectedOptions[0].textContent.split(' — ')[0];
-        feedback.textContent = `Спасибо! Заявка на «${item}» отправлена. Мы скоро свяжемся с вами для подтверждения.`;
-        form.reset();
-        quantity.value = '1';
-        endDate.min = todayString;
-        durationLabel.textContent = 'Выберите даты';
-        totalPrice.textContent = '— ₸';
-      });
-      document.querySelectorAll('.main-nav a').forEach((link) => {
-        link.addEventListener('click', () => { menuToggle.checked = false; });
-      });
-    })();
-  </script>
+    <!-- LOGIC -->
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeLabel = document.getElementById('themeLabel');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                if(themeLabel) themeLabel.innerText = 'Light';
+            } else {
+                html.classList.add('dark');
+                if(themeLabel) themeLabel.innerText = 'Dark';
+            }
+        }
+
+        function toggleMobileMenu() {
+            const drawer = document.getElementById('mobileDrawer');
+            const content = document.getElementById('drawerContent');
+            if (drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                setTimeout(() => content.classList.remove('translate-x-full'), 10);
+            } else {
+                content.classList.add('translate-x-full');
+                setTimeout(() => drawer.classList.add('hidden'), 200);
+            }
+        }
+
+        function filterCatalog(category) {
+            const items = document.querySelectorAll('.catalog-item');
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function selectGear(name, price) {
+            document.getElementById('formEquipment').value = `${name} ($${price}/day)`;
+            document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function calculateRentalCost() {
+            const price = parseInt(document.getElementById('calcItem').value) || 10;
+            const startInput = document.getElementById('calcStartDate').value;
+            const endInput = document.getElementById('calcEndDate').value;
+            
+            let days = 1;
+            if (startInput && endInput) {
+                const diff = new Date(endInput) - new Date(startInput);
+                days = Math.max(1, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+            }
+
+            let total = price * days;
+            let discount = days >= 5 ? Math.round(total * 0.1) : 0;
+            total -= discount;
+
+            document.getElementById('calcDays').innerText = `${days} day${days > 1 ? 's' : ''}`;
+            document.getElementById('calcDiscount').innerText = `$${discount}`;
+            document.getElementById('calcTotal').innerText = `$${total}`;
+        }
+
+        function syncCalcToBooking() {
+            const selectEl = document.getElementById('calcItem');
+            document.getElementById('formEquipment').value = selectEl.options[selectEl.selectedIndex].text;
+        }
+
+        function handleBookingSubmit(e) {
+            e.preventDefault();
+            const toast = document.getElementById('toast');
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3000);
+            document.getElementById('rentalForm').reset();
+        }
+
+        function openEmercomModal() { document.getElementById('emercomModal').classList.remove('hidden'); document.getElementById('emercomModal').classList.add('flex'); }
+        function closeEmercomModal() { document.getElementById('emercomModal').classList.add('hidden'); document.getElementById('emercomModal').classList.remove('flex'); }
+
+        window.onload = function() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 2);
+            document.getElementById('calcStartDate').value = today.toISOString().split('T')[0];
+            document.getElementById('calcEndDate').value = tomorrow.toISOString().split('T')[0];
+            document.getElementById('startDate').value = today.toISOString().split('T')[0];
+            document.getElementById('endDate').value = tomorrow.toISOString().split('T')[0];
+            document.getElementById('formEquipment').value = "TNF Stormbreak 2 ($10/day)";
+            calculateRentalCost();
+        };
+    </script>
 </body>
 </html>
